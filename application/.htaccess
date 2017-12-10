@@ -1,0 +1,17 @@
+<IfModule authz_core_module>
+    Require all denied
+</IfModule>
+<IfModule !authz_core_module>
+    Deny from all
+</IfModule>
+
+ # Mise en place de la ré-écriture
+RewriteEngine On
+
+# Adresse de base de réécriture
+RewriteBase /Projet/CI/
+
+# Règles
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule (.*) index.php?query=$1 [QSA,L]
