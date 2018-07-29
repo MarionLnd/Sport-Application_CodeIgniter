@@ -59,8 +59,6 @@ class Inscription extends CI_Controller{
 
 		if($this->form_validation->run() === FALSE){
 
-			$this->load->view('templates/header');
-
 			$this->load->view('user/user_inscription');
 
 		} else {
@@ -82,42 +80,45 @@ class Inscription extends CI_Controller{
 			if($avatar === null){
 
 				$data = array(
-					'nom' => $nom,
-					'prenom' => $prenom,
-					'mail' => $mail,
-					'login' => $login,
-					'password' => $password,
-					'avatar' => $avatar
+					'Login' => $login,
+					'Nom' => $nom,
+					'Prenom' => $prenom,
+					'Password' => $password,
+					'Mail' => $mail,
+					'Avatar' => $avatar
 				);
 
 				if($this->Model_membres->creer_user($data)){
-
-					$this->load->view('templates/header');
 
 					$this->load->view('user/user_connexion');
 
 				} else {
 
-					$data = array(
+					/*$data = array(
 						'nom' => $nom,
 						'prenom' => $prenom,
 						'mail' => $mail,
 						'login' => $login,
 						'password' => $password,
 						'avatar' => $avatar
-					);
+					);*/
 
-					$data['avatar']=$_FILES['avatar']['name'];
+					$data = array(
+					'Login' => $login,
+					'Nom' => $nom,
+					'Prenom' => $prenom,
+					'Password' => $password,
+					'Mail' => $mail,
+					'Avatar' => $avatar
+				);
+
+					$data['Avatar']=$_FILES['avatar']['name'];
 
 					if($this->Model_membres->creer_user($data)){
-
-						$this->load->view('templates/header');
 
 						$this->load->view('user/user_connexion');
 
 					} else {
-
-						$this->load->view('templates/header');
 
 						$this->load->view('user/user_inscription');
 					}

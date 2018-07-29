@@ -29,7 +29,7 @@ class Model_equipe extends CI_Model{
 
 	public function get_info_equipe($nomEquipe){
 
-		$this->db->select('*')->from('Equipe')->where('nomEquipe', $nomEquipe);
+		$this->db->select('*')->from('Equipe')->where('NomEquipe', $nomEquipe);
 
 		$query = $this->db->get();
 
@@ -42,7 +42,7 @@ class Model_equipe extends CI_Model{
 			$data['Ville'] = $row->Ville;
 			$data['Mixite'] = $row->Mixite;
 			$data['Description'] = $row->Description;
-			$data['LoginAdmin'] = $row->LoginAdmin;
+			$data['LoginAdmin'] = $row->LoginEquipeAdmin;
 
 			return $data;
 
@@ -54,29 +54,31 @@ class Model_equipe extends CI_Model{
 
 	public function get_sport($nomEquipe){
 
-		$this->db->select('Sport')->from('Equipe')->where('NomEquipe', $nomEquipe);
+		$this->db->select('Sport')->from('Equipe')->where('NomEquipe', $nomEquipe); //$nomEquipe[0]['NomEquipe']
 
 		$query = $this->db->get();
 
-		//$rq = $query->row();
+		$rq = $query->row();
 
-		//echo $rq['Sport'];
-
-		$rq = $query->result();
+		//$rq = $query->result();
 
 		return $rq;
 
 	}
 
-	public function get_equipe($login){
+	public function get_equipe($id){
 
-		$this->db->select('NomEquipe')->from('Equipe')->where('LoginMembre', $login);
+		$this->db->select('nomEquipe')->from('Membre')->where('idMembre', $id);
 
 		$query = $this->db->get();
 
-		$rq = $query->result_array();
+		$rq = $query->result();
 
-		return $rq;
+		foreach ($rq as $row){
+
+    	return $row->nomEquipe;
+
+		}
 
 	}
 
@@ -98,7 +100,6 @@ class Model_equipe extends CI_Model{
 			if($query->num_rows() == 1){
 
 				$rq = $query->row();
-
 				$pwd = $rq->MdpInscrit;
 
 				return $pwd;
@@ -118,7 +119,7 @@ class Model_equipe extends CI_Model{
 		}
 	}
 
-	public function integrer_equipe($loginM, $nomEquipe){
+	public function integrer_equipe($id, $loginM, $nomEquipe){
 
 		$this->db->select('*')->from('Equipe')->where('NomEquipe', $nomEquipe);
 
@@ -128,13 +129,9 @@ class Model_equipe extends CI_Model{
 		if($query->num_rows() == 1){
 
 			$data = array(
-				'Login' => $loginM,
-				'nomEquipe' => $nomEquipe,
-				'isAdmin' => false,
-				'isEntraineur' => false
-				);
-
-			echo "JE FONCTIONNE";
+				'idMembre' => $id,
+				'nomEquipe' => $nomEquipe
+			);
 
 			return $this->db->insert('Membre', $data);
 
@@ -149,46 +146,88 @@ class Model_equipe extends CI_Model{
 
 	}
 
-	public function creer_admin($data){
+	/*public function creer_admin($data){
 
 		return $this->db->insert('Admin', $data);
 
-	}
+	}*/
 
 
 	// Obtention du login de l'admin
 	public function get_admin($nomEquipe){
 
-		$this->db->select('LoginAdmin')->from('Equipe')->where('NomEquipe', $nomEquipe);
+		$this->db->select('idAdmin')->from('Admin')->where('NomEquipe', $nomEquipe);
 
 		$query = $this->db->get();
 
-		return $query->result();
+		if($query->num_rows() >= 1){
 
-		//SELECT loginAdmin FROM `Equipe` WHERE NomEquipe = 'DanceCrew'
+			$this->db->select('idAdmin')->from('Admin')->where('NomEquipe', $nomEquipe);
 
-		//SELECT Login FROM `Admin` WHERE NomEquipe
+			$query = $this->db->get();
+
+			return $query->result();
+
+		} else {
+
+			return $query->result();
+
+		}
 
 	}
 
 	// Obtention du login de l'entraineur
-	public function get_entraineur(){
+	public function isEntraineur($id){
 
-		$this->db->select('Login')->from('Equipe')->where('NomEquipe', $nomEquipe);
+		$this->db->select('NomEquipeEntraineur')->from('Entraineur')->where('idEntraineur', $id);
 
 		$query = $this->db->get();
 
-		return $query->result();
+		if($query->num_rows() == 1){
 
-		//SELECT Login FROM `Admin` WHERE NomEquipe
+			return 1;
+
+		} else {
+
+			return 0;
+
+		}
+
+	}
+
+	public function isAdmin($id){
+
+		$this->db->select('NomEquipe')->from('Admin')->where('idAdmin', $id);
+
+		$query = $this->db->get();
+
+		if($query->num_rows() == 1){
+
+			return 1;
+
+		} else {
+
+			return 0;
+
+		}
 
 	}
 
 	public function get_liste_membres($nomEquipe){
 
-		$this->db->select('LoginMembre')->from('Equipe')->where('NomEquipe', $nomEquipe);
+		$this->db->select('idMembre')->from('Membre')->where('nomEquipe', $nomEquipe);
 
 		$query = $this->db->get();
+
+		if($query->num_rows() >= 1){
+
+			$this->db->select('*')->from('Login_Membre')->join('Utilisateur', 'Utilisateur.id = Login_Membre.idLoginMembre');
+
+			$query = $this->db->get();
+
+			return $query->result();
+
+		}
 
 		return $query->result();
 

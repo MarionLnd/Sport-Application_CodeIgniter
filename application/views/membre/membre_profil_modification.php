@@ -5,30 +5,41 @@
   <body>
 
     <header>
-      <nav>
+      <nav class="uk-navbar-container" uk-navbar>
 
-        <a href="<?php echo site_url('Membre/index')?>"><img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil"></a>
-        
-        <p class="page" >Espace membre</p>
+          <a class="uk-navbar-item uk-logo" href="<?php echo site_url('Membre/index')?>">
+            <div>
+              <img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil" uk-img>
+            </div>
+          </a>
 
-        <a href="<?php echo site_url('Membre/creation_equipe')?>" class="onglet">Créer une équipe</a>
-
-        <a href="<?php echo site_url('Membre/integration_equipe')?>" class="onglet">Intégrer une équipe</a>
-
-        <a href="<?php echo site_url('Membre/invitations')?>" class="onglet">Mes invitations</a>
-
-        <a href="<?php echo site_url('Membre/equipes')?>" class="onglet">Mes équipes</a>
-
-        <a href="<?php echo site_url('Membre/profil')?>" class="onglet_actif">Mon profil</a>
-        
-      </nav>
+          <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+              <li>
+                <a href="<?php echo site_url('Membre/creation_equipe')?>">Créer une équipe</a>
+              </li>
+              <li>
+                <a href="<?php echo site_url('Membre/integration_equipe')?>">Intégrer une équipe</a>
+              </li>
+              <li class="uk-active">
+                <a href="<?php echo site_url('Membre/invitations')?>">Mes invitations</a>
+              </li>
+              <li>
+                <a href="<?php echo site_url('Membre/equipes')?>">Mes équipes</a>
+              </li>
+              <li>
+                <a href="<?php echo site_url('Membre/profil')?>">Mon profil</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
     </header>
 
     <h1>Modifier le profil</h1>
 
     <div class="container">
       <div class="heading">
-        <h1><?php echo $prenom." ".$nom; ?></h1>
+        <h2><?php echo $prenom." ".$nom; ?></h2>
       </div>
 
       <div class="body">
@@ -37,11 +48,14 @@
         <form class="" role="form">
           <?php echo form_open('Membre/gestion_compte', array());?>
 
+          <label>Nouvel avatar:</label>
           <img src="<?php if(isset($avatar)) echo base_url()."./assets/Images/uploads/".$avatar;?>" class="avatar" alt="avatar">
           <input type="file" name="avatar" class="avatar">
 
-          <input class="login" name="login" value="<?php echo $login;?>" type="text" placeholder="Nouveau login">
+          <label>Nouveau login:</label>
+          <input class="login" name="login" type="text" placeholder="<?php echo $login;?>">
 
+          <label>Nouveau mot de passe:</label>
           <input class="" name="password" value="" type="password" placeholder="Nouveau mot de passe">
 
           <?php echo form_close(); ?>
@@ -49,14 +63,18 @@
             <input class="action" value="Sauvegarder les modifications" type="submit">
 
             <input class="action" value="Recommencer" type="reset">
-
-            <a href="<?php echo site_url('Membre/profil')?>" class="action">Retour à mon profil</a>
-
-            <a href="<?php echo site_url('Membre/supprimer_compte')?>" class="action">Supprimer mon compte</a>
-            <br>
+            <br/>
           </div>
-
         </form>
       </div>
+      <div>
+          <a href="<?php echo site_url('Membre/profil')?>" class="action">
+            Retour à mon profil
+          </a>
+
+          <a href="<?php echo site_url('Membre/supprimer_compte')?>" class="action">
+          Supprimer mon compte
+          </a>
+        </div>
     </div>
   </div>

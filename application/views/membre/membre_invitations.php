@@ -4,26 +4,42 @@
 
 		<body>
 
-			<header>
-				<nav>
+			<!--<header>
+				<nav class="uk-navbar-container" uk-navbar>
 
-					<a href="<?php echo site_url('Membre/index')?>"><img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil"></a>
-					<p class="page" >Espace membre</p>
-					
-					<a href="<?php echo site_url('Membre/creation_equipe')?>" class="onglet">Créer une équipe</a>
-					
-					<a href="<?php echo site_url('Membre/integration_equipe')?>" class="onglet">Intégrer une équipe</a>
-					
-					<a href="<?php echo site_url('Membre/invitations')?>" class="onglet_actif">Mes invitations</a>
-					
-					<a href="<?php echo site_url('Membre/equipes')?>" class="onglet">Mes équipes</a>
-					
-					<a href="<?php echo site_url('Membre/profil')?>" class="onglet">Mon profil</a>
-					
+					<a class="uk-navbar-item uk-logo" href="<?php echo site_url('Membre/index')?>">
+						<div>
+							<img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil" uk-img>
+						</div>
+					</a>
+
+					<div class="uk-navbar-right">
+						<ul class="uk-navbar-nav">
+							<li>
+								<a href="<?php echo site_url('Membre/creation_equipe')?>">Créer une équipe</a>
+							</li>
+							<li>
+								<a href="<?php echo site_url('Membre/integration_equipe')?>">Intégrer une équipe</a>
+							</li>
+							<li class="uk-active">
+								<a href="<?php echo site_url('Membre/invitations')?>">Mes invitations</a>
+							</li>
+							<li>
+								<a href="<?php echo site_url('Membre/equipes')?>">Mes équipes</a>
+							</li>
+							<li>
+								<a href="<?php echo site_url('Membre/profil')?>">Mon profil</a>
+							</li>
+						</ul>
+					</div>
 				</nav>
-			</header>
+			</header>-->
 
 			<h1>Mes invitations</h1>
+
+			<div class="infos-page">
+				<p>Dans cette page, vous pouvez intégrer une équipe en entrant le nom de celle-ci, ainsi que son mot de passe si connu.</p>
+			</div>
 
 			<div class="container">
 				<table>
@@ -35,7 +51,7 @@
 					</thead>
 
 					<!--<tbody>
-						
+
 						<tr>
 							<td></td>
 						</tr>
@@ -52,5 +68,5 @@
 
 				</table>
 			</div>
-			
+
 		</body>

@@ -16,7 +16,6 @@ class Equipe extends CI_Controller{
 			redirect('Accueil/index');
 
 		}
-
 	}
 
 
@@ -31,55 +30,60 @@ class Equipe extends CI_Controller{
 
 	public function accueil($nomEquipe){
 
-		//$nomEquipe = $this->session->userdata('nomEquipe');
-
-		echo $nomEquipe;
+		$login = $this->session->userdata('login');
 
 		$sport['Sport'] = $this->Model_equipe->get_sport($nomEquipe);
 
-		print_r($sport['Sport']);
+		$nomTeam = $this->session->set_userdata('nomEquipe', $nomEquipe);
 
-		print_r($sport);
+		$spt = $sport['Sport']->Sport;
 
-		echo "Sport".$sport['Sport'];
+		$idMembre = $this->Model_membres->get_id_membre($login);
 
-		//$sport = $this->session->set_userdata('sport', $spt);
+		$isEntraineur = $this->Model_equipe->isEntraineur($idMembre);
 
-		$this->load->view('templates/header');
+		if($isEntraineur == 1){
 
-		//$login = $this->session->userdata('login');
+			$this->load->view('templates/header');
+			$this->load->view('entraineurs/entraineur_accueil', array('login' => $login, 'sport' => $spt, 'nomEquipe' => $nomEquipe));
+			$this->load->view('templates/footer_membre');
 
-		//$sport = $this->session->userdata('sport');
+		} else {
 
-		$this->load->view('equipe/equipe_accueil', array('login' => $login, 'sport' => $sport, 'nomEquipe' => $nomEquipe));
-
-		$this->load->view('templates/footer_equipe');
-
+			$this->load->view('templates/header');
+			$this->load->view('equipe/equipe_accueil', array('login' => $login, 'sport' => $spt, 'nomEquipe' => $nomEquipe));
+			$this->load->view('templates/footer_membre');
+		}
 	}
 
 	public function equipe(){
-
-		$sport = $this->session->userdata('sport');
 
 		$nomTeam=$_SESSION['nomEquipe'];
 
 		$data = $this->Model_equipe->get_info_equipe($nomTeam);
 
+		$sport = $data['Sport'];
 		$logo = $data['Logo'];
-
 		$ville = $data['Ville'];
-
 		$mixite = $data['Mixite'];
-
 		$description = $data['Description'];
-
 		$loginAdmin = $data['LoginAdmin'];
 
-		$this->load->view('templates/header');
+		$idMembre = $this->Model_membres->get_id_membre($loginAdmin);
+		$isEntraineur = $this->Model_equipe->isEntraineur($idMembre);
 
-		$this->load->view('equipe/equipe_profil', array('sport' => $sport, 'nomEquipe' => $_SESSION['nomEquipe'], 'logo' => $logo, 'ville' => $ville, 'mixite' => $mixite, 'description' => $description, 'loginAdmin' => $loginAdmin ) );
+		if($isEntraineur == 1){
 
-		$this->load->view('templates/footer_equipe');
+			$this->load->view('templates/header');
+			$this->load->view('entraineurs/entraineur_profil', array('sport' => $sport, 'nomEquipe' => $_SESSION['nomEquipe'], 'logo' => $logo, 'ville' => $ville, 'mixite' => $mixite, 'description' => $description, 'loginAdmin' => $loginAdmin ) );
+			$this->load->view('templates/footer_membre');
+
+		} else {
+
+			$this->load->view('templates/header');
+			$this->load->view('equipe/equipe_profil', array('sport' => $sport, 'nomEquipe' => $_SESSION['nomEquipe'], 'logo' => $logo, 'ville' => $ville, 'mixite' => $mixite, 'description' => $description, 'loginAdmin' => $loginAdmin ) );
+			$this->load->view('templates/footer_membre');
+		}
 	}
 
 
@@ -90,76 +94,115 @@ class Equipe extends CI_Controller{
 
 	public function supprimer_equipe(){
 
-		$statut = $this->Model_membres->get_statut($_SESSION['login']);
-
 		$nomEquipe = $statut['nomEquipe'];
-
 		$admin = $statut['admin'];
-
 		$entraineur = $statut['entraineur'];
 
 		if($admin == 1){
 
 			$this->load->view('templates/header');
-
 			$this->load->view('equipe/equipe_profil', array('sport' => $sport, 'nomEquipe' => $_SESSION['nomEquipe']) );
-
-			$this->load->view('templates/footer_equipe');
+			$this->load->view('templates/footer_membre');
 
 		} else {
 
 			$msg_erreur = "Vous ne pouvez pas supprimer cette équipe : vous n'êtes pas l'administrateur.";
 
 			$this->load->view('templates/header');
-
 			$this->load->view('equipe/equipe_profil', array('sport' => $sport, 'nomEquipe' => $_SESSION['nomEquipe'], 'logo' => $logo, 'ville' => $ville, 'mixite' => $mixite, 'description' => $description, 'loginAdmin' => $loginAdmin, 'msg_erreur' => $msg_erreur ) );
-
-			$this->load->view('templates/footer_equipe');
-
+			$this->load->view('templates/footer_membre');
 		}
-
-
 	}
 
 	public function calendrier(){
 
+		$login = $this->session->userdata('login');
+		$nomTeam = $this->session->userdata('nomEquipe');
+
+		$idMembre = $this->Model_membres->get_id_membre($login);
+		$isEntraineur = $this->Model_equipe->isEntraineur($idMembre);
+		$data = $this->Model_equipe->get_info_equipe($nomTeam);
+
+		$sport = $data['Sport'];
+
 		$prefs = array(
-        'start_day'    => 'sunday',
-        'month_type'   => 'long',
-        'day_type'     => 'short'
-		);
+	        'start_day'    => 'sunday',
+	        'month_type'   => 'long',
+	        'day_type'     => 'short'
+			);
 
-		$this->load->library('calendar', $prefs);
+			$this->load->library('calendar', $prefs);
 
-		$sport = $this->session->userdata('sport');
+			// Tests
+			/*$data = array(
+			        3  => 'http://example.com/news/article/2006/06/03/',
+			        7  => 'http://example.com/news/article/2006/06/07/',
+			        13 => 'http://example.com/news/article/2006/06/13/',
+			        26 => 'http://example.com/news/article/2006/06/26/'
+			);*/
 
-		// Tests
-		/*$data = array(
-		        3  => 'http://example.com/news/article/2006/06/03/',
-		        7  => 'http://example.com/news/article/2006/06/07/',
-		        13 => 'http://example.com/news/article/2006/06/13/',
-		        26 => 'http://example.com/news/article/2006/06/26/'
-		);*/
+		if($isEntraineur == 1){
 
-		$this->load->view('templates/header');
+			$this->load->view('templates/header');
+			$this->load->view('entraineurs/entraineur_calendrier', array('sport' => $sport));//,'data' => $data) );
+			$this->load->view('templates/footer_membre');
 
-		$this->load->view('equipe/equipe_calendrier', array('sport' => $sport), array('data' => $data) );
+		} else {
 
-		$this->load->view('templates/footer_equipe');
-
+			$this->load->view('templates/header');
+			$this->load->view('equipe/equipe_calendrier', array('sport' => $sport));//,'data' => $data) );
+			$this->load->view('templates/footer_membre');
+		}
 	}
 
 	public function liste_membre(){
 
-		$sport = $this->session->userdata('sport');
+		$login = $this->session->userdata('login');
+
+		$idMembre = $this->Model_membres->get_id_membre($login);
+		$isEntraineur = $this->Model_equipe->isEntraineur($idMembre);
+
+		$data = $this->Model_equipe->get_info_equipe($_SESSION['nomEquipe']);
+
+		$sport = $data['Sport'];
 
 		$membres = $this->Model_equipe->get_liste_membres($_SESSION['nomEquipe']);
 
-		$this->load->view('templates/header');
+		if($isEntraineur == 1){
 
-		$this->load->view('equipe/equipe_liste_membre', array('sport' => $sport, 'membres' => $membres) );
+			foreach ($membres as $membre) {
 
-		$this->load->view('templates/footer_equipe');
+				$id = $this->Model_membres->get_id_membre($membre->LoginMembre);
+				$membreEntraineur = $this->Model_equipe->isEntraineur($id);
+				$membreAdmin = $this->Model_equipe->isAdmin($id);
+
+			}
+
+			$this->load->view('templates/header');
+			$this->load->view('entraineurs/entraineur_liste_membre', array('sport' => $sport, 'membres' => $membres, 'isEntraineur' => $membreEntraineur, 'isAdmin' => $membreAdmin) );
+			$this->load->view('templates/footer_membre');
+
+		} else {
+
+			foreach ($membres as $membre) {
+
+				$id = $this->Model_membres->get_id_membre($membre->LoginMembre);
+
+				$membreEntraineur = $this->Model_equipe->isEntraineur($id);
+
+				$membreAdmin[] = $this->Model_equipe->isAdmin($id);
+
+				foreach ($membreAdmin as $admin) {
+
+					print_r($admin);
+
+				}
+			}
+
+			$this->load->view('templates/header');
+			$this->load->view('equipe/equipe_liste_membre', array('sport' => $sport, 'membres' => $membres, 'isEntraineur' => $membreEntraineur, 'isAdmin' => $admin) );
+			$this->load->view('templates/footer_membre');
+		}
 
 	}
 
@@ -168,73 +211,21 @@ class Equipe extends CI_Controller{
 		$sport = $this->session->userdata('sport');
 
 		$this->load->view('templates/header');
-
 		$this->load->view('equipe/equipe_event', array('sport' => $sport) );
-
-		$this->load->view('templates/footer_equipe');
-
+		$this->load->view('templates/footer_membre');
 	}
 
 	public function ajouter_evenement(){
 
-		$statut = $this->Model_membres->get_statut($_SESSION['login']);
-
-		$nomEquipe = $statut['nomEquipe'];
-
-		$admin = $statut['admin'];
-
-		$entraineur = $statut['entraineur'];
-
-		if($entraineur == 1){
-
-
-
-
-
-		}
 	}
 
 	public function modifier_evenement(){
-
-		$statut = $this->Model_membres->get_statut($_SESSION['login']);
-
-		$nomEquipe = $statut['nomEquipe'];
-
-		$admin = $statut['admin'];
-
-		$entraineur = $statut['entraineur'];
-
-		if($entraineur == 1){
-
-
-
-
-
-		}
 
 	}
 
 	public function supprimer_evenement(){
 
-		$statut = $this->Model_membres->get_statut($_SESSION['login']);
-
-		$nomEquipe = $statut['nomEquipe'];
-
-		$admin = $statut['admin'];
-
-		$entraineur = $statut['entraineur'];
-
-		if($entraineur == 1){
-
-
-
-
-
-		}
-
 	}
-
-
 }
 
 ?>

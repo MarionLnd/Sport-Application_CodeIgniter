@@ -17,11 +17,6 @@ class Model_membres extends CI_Model{
 
 	}
 
-	public function creer_admin($data){
-
-		return $this->db->insert('Admin', $data);
-	}
-
 	public function supprimer_compte($login){
 
 		return $this->db->where('login', $login)->delete('Utilisateur');
@@ -71,8 +66,8 @@ class Model_membres extends CI_Model{
 
 	}
 
-	// Obtention de l'id de l'utilisateur
-	public function getId($login){
+	// Obtention de l'id du membre
+	public function get_id_membre($login){
 
 		$this->db->select('id')->from('Utilisateur')->where('Login', $login);
 
@@ -83,6 +78,29 @@ class Model_membres extends CI_Model{
 			$rq = $query->row();
 
 			$id = $rq->id;
+
+			return $id;
+
+		} else {
+
+			echo "PROBLEME";
+
+		}
+
+	}
+
+	// Obtention de l'id de l'admin
+	public function get_id_admin($login){
+
+		$this->db->select('idLoginAdmin')->from('Login_Admin')->where('LoginAdmin', $login);
+
+		$query = $this->db->get();
+
+		if($query->num_rows() == 1){
+
+			$rq = $query->row();
+
+			$id = $rq->idLoginAdmin;
 
 			return $id;
 		}
@@ -97,11 +115,76 @@ class Model_membres extends CI_Model{
 
 	}
 
+	// Vérifie si l'user est un membre où non (cad s'il fait partie de la table Login_Membre car un membre est un user qui fait partie d'au moins 1 équipe)
+	public function verification_membre($id){
+
+		$this->db->select('LoginMembre')->from('Login_Membre')->where('idLoginMembre', $id);
+
+		$query = $this->db->get();
+
+		if($query->num_rows() == 1){
+
+			$rq = $query->row();
+
+			$id = $rq->id;
+
+			return true;
+
+		} else {
+
+			return false;
+
+		}
+	}
+
+	public function creer_login_membre($id, $login){
+
+			//$this->db->insert('Login_Membre', $login);
+
+			$data = array(
+				'idLoginMembre' => $id,
+				'LoginMembre' => $login
+			);
+
+			return $this->db->insert('Login_Membre', $data);
+	}
+
+	public function creer_login_admin($id, $login){
+
+			//$this->db->insert('Login_Membre', $login);
+
+			$data = array(
+				'idLoginAdmin' => $id,
+				'LoginAdmin' => $login
+			);
+
+			return $this->db->insert('Login_Admin', $data);
+	}
+
 	// Un membre fait partie d'une équipe
-	public function creer_membre($data){
+	public function creer_membre($id, $nomEquipe){
 
-		return $this->db->insert('Membre', $data);
+			//$this->db->insert('Login_Membre', $login);
 
+			$data = array(
+				'idMembre' => $id,
+				'nomEquipe' => $nomEquipe
+			);
+
+			return $this->db->insert('Membre', $data);
+	}
+
+	// Un membre a créée une équipe
+	public function creer_admin($id, $nomEquipe){
+
+			//$this->db->insert('Login_Admin', $login);
+
+			$data = array(
+				'member_id' => $id,
+				'team_login' => $nomEquipe
+			);
+
+			return $this->db->insert('Admin', $data);
 	}
 
 	public function get_info_membre($login){
@@ -129,29 +212,6 @@ class Model_membres extends CI_Model{
 		}
 	}
 
-	public function get_statut($login){
-
-		$this->db->select('*')->from('Membre')->where('Login', $login);
-
-		$query = $this->db->get();
-
-		if($query->num_rows() == 1){
-
-			$row = $query->row();
-
-			$data['nomEquipe'] = $row->nomEquipe;
-			$data['admin'] = $row->isAdmin;
-			$data['entraineur'] = $row->isEntraineur;
-
-			return $data;
-
-		} else {
-
-			echo "JE FONCTIONNE PAS";
-		}
-	}
-
-
 	// Obtention du nombre d'invitations de l'utilisateur
 	public function get_invitations($login){
 
@@ -171,22 +231,19 @@ class Model_membres extends CI_Model{
 
 	}
 
-	// Obtention du nom des équipes de l'utilisateur
-	public function get_equipes($login){
+	// Obtention du nombre d'équipe(s) de l'utilisateur
+	public function get_nb_equipes($id){
 
-		$this->db->select('NomEquipe, count(*)')->from('Equipe')->where('LoginMembre', $login);
+		$this->db->select('nomEquipe')->from('Membre')->where('idMembre', $id);
 
-		$query = $this->db->get();
+		$result = $this->db->count_all_results();
 
-		$rq = $query->result();
-
-		return $rq;
-
+		return $result;
 	}
 
-	public function get_equipes_admin($login){
+	public function get_equipes_admin($id){
 
-		$this->db->select('NomEquipe')->from('Equipe')->where('LoginAdmin', $login);
+		$this->db->select('NomEquipe')->from('Admin')->where('idAdmin', $id);
 
 		$query = $this->db->get();
 
@@ -197,11 +254,21 @@ class Model_membres extends CI_Model{
 
 	public function get_membres(){
 
-		$this->db->select('Login')->from('Membre');
+		$this->db->select('Login')->from('Utilisateur');
 
 		$query = $this->db->get();
 
-		return $query->result();
+		if($query->num_rows() >= 1){
+
+				return $query->result();
+
+		} else {
+
+			echo 'Pas de membres';
+
+			//return $query->result();
+
+		}
 
 	}
 

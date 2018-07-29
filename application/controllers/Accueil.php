@@ -10,11 +10,9 @@ class Accueil extends CI_Controller{
 
 	public function index(){
 
-		$this->load->view('templates/header_accueil');
-
 		$this->load->view('user/user_accueil');
 
-		$this->load->view('templates/footer');
+		$this->load->view('templates/footer_accueil');
 
 	}
 

@@ -5,64 +5,76 @@
 	<body>
 
 		<header>
-			<nav>
+			<nav class="uk-navbar-container" uk-navbar>
 
-				<a href="<?php echo site_url('Membre/index')?>"><img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil"></a>
-				
-				<p class="page" >Espace membre</p>
-				
-				<a href="<?php echo site_url('Membre/creation_equipe')?>" class="onglet">Créer une équipe</a>
-				
-				<a href="<?php echo site_url('Membre/integration_equipe')?>" class="onglet">Intégrer une équipe</a>
-				
-				<a href="<?php echo site_url('Membre/invitations')?>" class="onglet">Mes invitations</a>
-				
-				<a href="<?php echo site_url('Membre/equipes')?>" class="onglet_actif">Mes équipes</a>
+			<a class="uk-navbar-item uk-logo" href="<?php echo site_url('Membre/index')?>">
+				<div>
+					<img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil" uk-img>
+				</div>
+			</a>
 
-				<a href="<?php echo site_url('Membre/profil')?>" class="onglet">Mon profil</a>
-				
-			</nav>
+			<div class="uk-navbar-right">
+				<ul class="uk-navbar-nav">
+					<li>
+						<a href="<?php echo site_url('Membre/creation_equipe')?>">Créer une équipe</a>
+					</li>
+					<li>
+						<a href="<?php echo site_url('Membre/integration_equipe')?>">Intégrer une équipe</a>
+					</li>
+					<li>
+						<a href="<?php echo site_url('Membre/invitations')?>">Mes invitations</a>
+					</li>
+					<li class="uk-active">
+						<a href="<?php echo site_url('Membre/equipes')?>">Mes équipes</a>
+					</li>
+					<li>
+						<a href="<?php echo site_url('Membre/profil')?>">Mon profil</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
 		</header>
 
 		<h1>Mes équipes</h1>
 
-		<div class="container">
+		<div class="infos-page">
+				<p>Dans cette page, vous pouvez consulter vos équipes.</p>
+		</div>
+
+		<div class="contenu-centre" style="overflow-x:auto">
 			<table>
 
 				<thead>
 
 					<th>Nom de l'équipe</th>
-					
-					<!--
-					<th>Sport de l'équipe</th>
 
+					<th>Sport de l'équipe</th>
 
 					<th>Ville de l'équipe</th>
 
-
 					<th>Administrateur de l'équipe</th>
-					-->
+
 				</thead>
 
 				<tbody>
-					<?php 
+					<?php
 
-					if(isset($nbEquipes)){
-						foreach ($nbEquipes as $nomEquipe) {
+					if(isset($data)){
+						foreach ($data as $dataEquipe) {
 							echo '<tr>';
 							echo '<td>';
-							echo '<a href="'.site_url('Equipe/accueil/'.$nomEquipe->NomEquipe).'">'.$nomEquipe->NomEquipe.'</a>';
-							echo '</td>';
-							/*echo '<td>';
-							echo $nomEquipe->Sport;
+							echo '<a href="'.site_url('Equipe/accueil/'.$nomEquipe).'" class="team_actuelle">'.$nomEquipe.'</a>';
 							echo '</td>';
 							echo '<td>';
-							echo $nomEquipe->Ville;
+							echo $dataEquipe['Sport'];
 							echo '</td>';
 							echo '<td>';
-							echo $nomEquipe->LoginAdmin;
+							echo $dataEquipe['Ville'];
 							echo '</td>';
-							echo '</tr>';*/
+							echo '<td>';
+							echo $dataEquipe['LoginAdmin'];
+							echo '</td>';
+							echo '</tr>';
 						}
 					}
 					?>
@@ -70,5 +82,5 @@
 			</table>
 
 		</div>
-		
+
 	</body>

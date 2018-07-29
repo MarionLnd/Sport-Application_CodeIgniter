@@ -1,7 +1,7 @@
 <?php
 
 class Connexion extends CI_Controller{
-	
+
 	public function __construct(){
 
 		parent::__construct(); /*OBLIGATOIRE : EQUIVALEUR SUPER() EN JAVA*/
@@ -12,9 +12,9 @@ class Connexion extends CI_Controller{
 	}
 
 	public function index(){
-		
+
 		$this->verification_connexion();
-		
+
 	}
 
 	public function verification_connexion(){
@@ -24,8 +24,6 @@ class Connexion extends CI_Controller{
 		$this->form_validation->set_rules('password', '', 'required|trim|min_length[1]|max_length[50]');
 
 		if($this->form_validation->run() === FALSE){
-
-			$this->load->view('templates/header');
 
 			$this->load->view('user/user_connexion');
 
@@ -41,7 +39,7 @@ class Connexion extends CI_Controller{
 
 			if($pwdBD == $password){
 
-				$id = $this->Model_membres->getId($login);
+				$id = $this->Model_membres->get_id_membre($login);
 
 				// Definition des SESSIONS
 				$this->session->set_userdata('online', true); // $_SESSION['online'] = true    -> User connecté
@@ -64,8 +62,6 @@ class Connexion extends CI_Controller{
 
 				$msg_erreur = array('msg_erreur' => $msg);
 
-				$this->load->view('templates/header');
-
 				$this->load->view('user/user_connexion', $msg_erreur);
 
 			}
@@ -75,8 +71,6 @@ class Connexion extends CI_Controller{
 				$msg = "Le login entré n'existe pas";
 
 				$msg_erreur = array('msg_erreur' => $msg);
-
-				$this->load->view('templates/header');
 
 				$this->load->view('user/user_connexion', $msg_erreur);
 

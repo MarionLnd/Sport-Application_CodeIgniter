@@ -8,6 +8,17 @@
  * Designed and built with all the love in the world by @mdo and @fat.
  */
 
+@font-face {
+  font-family: "Occupied";
+  src: url("assets/fonts/Occupied/occupied.oft");
+}
+
+body {
+    font-family: 'Pacifico', cursive;
+    font-family: 'Snippet', sans-serif;
+    font-family: 'Occupied';
+}
+
 .clearfix {
   *zoom: 1;
 }
@@ -225,7 +236,7 @@ body {
   margin: 0;
   /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
  /* font-family : 'Open Sans', sans-serif;*/
-  
+
   font-family : 'Roboto', sans-serif;
   /*font-family : 'Bitstream Vera Sans', sans-serif;*/
 

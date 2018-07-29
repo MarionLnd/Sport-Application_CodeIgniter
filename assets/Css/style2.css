@@ -17,14 +17,13 @@ body {
 
 /*------------- MENU DE NAVIGATION --------------- */
 #LogoAccueil{
-  width: 25%;
+  width: 30%;
   top: 0;
   margin: 0;
   left: 0;
   margin-top: 0.4em;
-  margin-right: 70%;
 }
-
+/*
 nav {
   margin: 0;
   left: 0;
@@ -72,13 +71,10 @@ nav .onglet_actif {
   padding: 0.8em 0.8em;
   text-decoration: none;
   font-size: 17px;
-}
+  border: 1px solid black;
+}*/
 
 /*------------- CONTENU --------------- */
-
-h1{
-  margin-top: 13%;
-}
 
 section{
   display: inline-block;
@@ -86,6 +82,48 @@ section{
   outline: 1px solid green;
   background-color: white;
   margin-top: 2%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 75%;
+}
+
+th {
+    background-color: #ff8000;
+    color: white;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 1%;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.team_actuelle{
+  color: black;
+  text-decoration: underline;
+}
+
+.container-accueil{
+  padding: 2%;
+  margin: 0 auto;
+  margin-top: 15%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.contenu-centre{
+  padding: 2%;
+  margin: 0 auto;
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
 }
 
 .container{
@@ -106,6 +144,42 @@ section{
   margin-right: auto;
 }
 
+.infos-page{
+  border: 2px solid black;
+  background-color: white;
+  margin: 2%;
+  padding: 1%;
+}
+/*
+input[type=text], input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #ff8000;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+*/
+.infos-page p{
+  text-align: center;
+}
+
 .form-container{
   margin: 0 auto;
   height: 25%;
@@ -113,15 +187,9 @@ section{
 }
 
 .form{
-  margin: auto;
-  /*margin-top: 17%;*/
-  background-color: white;
-  flex-direction: column;
-  background-color: white;
-  width: 70%;
-  padding-bottom: 2%;
-  margin-bottom: 5%;
-  border: 2px solid black;
+ border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
 }
 
 .form2{
@@ -134,7 +202,7 @@ section{
   margin-bottom: 5%;
   border: 2px solid black;
 }
-
+/*
 form{
   margin: auto;
   margin-bottom: 1%;
@@ -173,7 +241,8 @@ label{
   width: 50%;
   display: block;
   margin-top: 0.5em;
-}
+}*/
+/*
 footer{
   display: block;
   color: #ff8000;
@@ -213,3 +282,4 @@ footer .contact {
     text-decoration: none;
     margin: 1%;
 }
+*/

@@ -1,5 +1,11 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<?php echo link_tag('assets/Images/icone.png', 'shortcut icon', 'image/png'); ?>
 		<?php  echo link_tag('assets/Css/style_inscription.css'); ?>
-		<title>SportsAndCo</title>
+		<title>SportsAndCo - Inscription</title>
 	</head>
 	<body>
 
@@ -7,9 +13,9 @@
 			<div id="Logo">
 				<a href="<?php echo site_url('Accueil/index')?>"><img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil"></a>
 			</div>
-			<nav>
+			<!--<div>
 				<p>INSCRIPTION</p>
-			</nav>
+			</div>-->
 		</header>
 
 		<?php

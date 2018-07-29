@@ -1,67 +1,79 @@
-		<?php  echo link_tag('assets/Css/style_profil.css'); ?>
+		<!--<?php  echo link_tag('assets/Css/style_profil.css'); ?>-->
 		<title>Mon profil</title>
 	</head>
 
 	<body>
 
 		<header>
-			<nav>
+			<nav class="uk-navbar-container" uk-navbar>
 
-				<a href="<?php echo site_url('Membre/index')?>"><img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil"></a>
-				
-				<p class="page" >Espace membre</p>
+			<a class="uk-navbar-item uk-logo" href="<?php echo site_url('Membre/index')?>">
+				<div>
+					<img data-src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil" width="200" height="40" uk-img>
+				</div>
+			</a>
 
-				<a href="<?php echo site_url('Membre/creation_equipe')?>" class="onglet">Créer une équipe</a>
-
-				<a href="<?php echo site_url('Membre/integration_equipe')?>" class="onglet">Intégrer une équipe</a>
-
-				<a href="<?php echo site_url('Membre/invitations')?>" class="onglet">Mes invitations</a>
-
-				<a href="<?php echo site_url('Membre/equipes')?>" class="onglet">Mes équipes</a>
-
-				<a href="<?php echo site_url('Membre/profil')?>" class="onglet_actif">Mon profil</a>
-				
-			</nav>
+			<div class="uk-navbar-right">
+				<ul class="uk-navbar-nav">
+					<li>
+						<a href="<?php echo site_url('Membre/creation_equipe')?>">Créer une équipe</a>
+					</li>
+					<li>
+						<a href="<?php echo site_url('Membre/integration_equipe')?>">Intégrer une équipe</a>
+					</li>
+					<li>
+						<a href="<?php echo site_url('Membre/invitations')?>">Mes invitations</a>
+					</li>
+					<li>
+						<a href="<?php echo site_url('Membre/equipes')?>">Mes équipes</a>
+					</li>
+					<li class="uk-active">
+						<a href="<?php echo site_url('Membre/profil')?>">Mon profil</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
 		</header>
 
-		<h1>Mon profil</h1>
-		
-		<div class="container">
-				<div class="heading">
-					<h2 class="nom_membre"><?php if(isset($prenom)) echo $prenom." ".$nom;?></h2>
-				</div>
-				<div class="body">
-						<div class="avatar" align="center"> <img alt="<?php if(isset($avatar)) echo $avatar;?>" src="<?php if(isset($avatar)) echo base_url()."./assets/Images/uploads/".$avatar;?>" class="avatar">
-						</div>
-						<div class="tableau"> 
-							<table class="tableau-info">
-								<tbody>
-									<tr>
-										<td>Login:</td>
-										<td><?php if(isset($_SESSION['login'])) echo $_SESSION['login'];?></td>
-									</tr>
-									<tr>
-										<td>Prénom:</td>
-										<td><?php if(isset($prenom)) echo $prenom;?></td>
-									</tr>
-									<tr>
-										<td>Nom:</td>
-										<td><?php if(isset($nom))  echo $nom;?></td>
-									</tr>
-										<td>Email</td>
-										<td><?php if(isset($mail)) echo $mail;?></a></td>
-									</tr>									
+<div class="uk-container">
+	<h1>Mon profil</h1>
 
-								</tbody>
-							</table>
+		<div class="infos-page">
+			<p>Dans cette page, vous pouvez consulter votre profil.</p>
+		</div>
+
+	<div class="uk-container">
+		<div class="uk-card uk-card-default uk-card-small">
+				<div class="uk-card-header">
+					<h2 class="nom_membre"><?php if(isset($prenom)) echo $prenom." ".$nom;?></h2>
+					<div class="avatar" align="center"> <img alt="<?php if(isset($avatar)) echo $avatar;?>" src="<?php if(isset($avatar)) echo base_url()."./assets/Images/uploads/".$avatar;?>" class="avatar">
 						</div>
-						<div class="actions">
+				</div>
+				<div class="uk-card-body">
+
+						<div class="uk-margin">
+							Login : <?php if(isset($_SESSION['login'])) echo $_SESSION['login'];?>
+						</div>
+						<div class="uk-margin">
+							Prénom : <?php if(isset($prenom)) echo $prenom;?>
+						</div>
+						<div class="uk-margin">
+							Nom : <?php if(isset($nom))  echo $nom;?>
+						</div>
+						<div class="uk-margin">
+							Email : <?php if(isset($mail)) echo $mail;?>
+						</div>
+
+					</div>
+					<div class="uk-card-footer">
 							<a href="<?php echo site_url('Membre/gestion_compte')?>" class="action">Modifier mon profil</a>
 
 							<a href="<?php echo site_url('Membre/deconnexion')?>" class="action">Déconnexion</a>
 							<br>
-						</div>
+					</div>
 				</div>
 			</div>
+</div>
+
 
 	</body>

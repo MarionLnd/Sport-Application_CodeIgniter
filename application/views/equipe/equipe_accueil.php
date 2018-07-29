@@ -1,4 +1,4 @@
-<?php  echo link_tag('assets/Css/style_equipe.css'); ?>
+<!--<?php  echo link_tag('assets/Css/style_equipe.css'); ?>-->
 	<?php
 		echo "<style>";
 		echo "html{";
@@ -12,44 +12,49 @@
 
 	<body>
 
-	<!--	<header>
-			<nav>
+		<header>
+			<nav class="uk-navbar-container" uk-navbar>
 
-				<a href="<?php echo site_url('Equipe/index')?>"><img src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil"></a>
+				<a class="uk-navbar-item uk-logo" href="<?php echo site_url('Membre/index')?>">
+					<div>
+						<img data-src="<?php echo base_url()."./assets/Images/logoSport.png"?>" alt="logoSport" title="logoSport" id="LogoAccueil" width="200" height="40" uk-img>
+						<div class="uk-navbar-subtitle">Espace equipe</div>
+					</div>
+				</a>
 
-				<p class="page" >Espace equipe</p>
-
-				<a href="<?php echo site_url('Equipe/liste_membre')?>" class="onglet">Liste des membres</a>
-
-				<a href="<?php echo site_url('Equipe/calendrier')?>" class="onglet">Calendrier</a>
-
-				<!--<a href="<?php echo site_url('Equipe/evenements')?>" class="onglet">Evénèments</a>-->
-
-			<!--	<a href="<?php echo site_url('Equipe/equipe');?>" class="onglet">L'équipe</a>
-
+				<div class="uk-navbar-right">
+					<ul class="uk-navbar-nav">
+						<li>
+							<a href="<?php echo site_url('Equipe/liste_membre')?>" class="onglet_actif">Liste des membres</a>
+						</li>
+						<li>
+							<a href="<?php echo site_url('Equipe/calendrier')?>" class="onglet">Calendrier</a>
+						</li>
+						<li>
+							<a href="<?php echo site_url('Equipe/equipe')?>" class="onglet">L'équipe</a>
+						</li>
+						<li>
+							<a href="<?php echo site_url('Membre/equipes')?>">Mes équipes</a>
+						</li>
+						<li>
+							<a href="<?php echo site_url('Membre/profil')?>">Mon profil</a>
+						</li>
+					</ul>
+				</div>
 			</nav>
-		</header>-->
+		</header>
 
 
 
-		<div class="container">
-			<div>
-				<h3>Bienvenue <?php if(isset($login)) echo $login; ?></h3>
+		<div class="uk-container">
+			<div class="uk-margin uk-background-default">
+				<h3>Bienvenue <?php if(isset($login)) echo $login; ?> dans l'équipe <?php echo $nomEquipe;?></h3>
 
-				<p>Maintenant connecté(e), vous pouvez créer une équipe ou choisir d'en intéger une : soit par invitation de l'administrateur de l'équipe, soit par connaissance du mot de passe de l'équipe</p>
+				<p>Vous vous trouvez à présent sur l'écran d'accueil de votre équipe : vous pouvez consulter les informations concernant votre équipe, le calendrier de celle-ci, les différents évènements de celle-ci et enfin la liste des membres la composant.</p>
 
 				<p class="date"><?php echo date("F j Y, g:i a");?></p>
-				<?php echo "nom de l'equipe:".$nomEquipe; ?>
-				<?php echo $sport; ?>
-				<!--<?php echo $_SESSION['nomEquipe']; ?>-->
 
 			</div>
-
-			<div>
-				<h2>Actualités sportives</h2>
-
-			</div>
-
 		</div>
 
 	</body>

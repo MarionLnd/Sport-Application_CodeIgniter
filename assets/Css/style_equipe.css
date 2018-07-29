@@ -72,12 +72,36 @@ nav .onglet_actif {
   padding: 0.8em 0.8em;
   text-decoration: none;
   font-size: 17px;
+  border: 1px solid black;
 }
 
 /*------------- CONTENU --------------- */
 
 h1{
+  border: 2px dashed black;
+  background-color: white;
+  width: 25%;
+  padding: 1%;
   margin-top: 13%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 75%;
+}
+
+th {
+    background-color: #ff8000;
+    color: white;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 1%;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
 section{
@@ -88,10 +112,32 @@ section{
   margin-top: 2%;
 }
 
+.tableau-info{
+  padding: 2%;
+}
+
 .container{
   padding: 2%;
   margin: 0 auto;
   margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.container-accueil{
+  padding: 2%;
+  margin: 0 auto;
+  margin-top: 15%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.contenu-centre{
+  padding: 2%;
+  margin: 0 auto;
+  margin-top: 5%;
   display: flex;
   justify-content: center;
   background-color: white;
@@ -107,74 +153,67 @@ section{
   margin-right: auto;
 }
 
-.form-container{
-  margin: 0 auto;
-  height: 25%;
-  width: 60%;
-}
-
-.form{
-  margin: auto;
-  /*margin-top: 17%;*/
-  background-color: white;
-  flex-direction: column;
-  background-color: white;
-  width: 70%;
-  padding-bottom: 2%;
-  margin-bottom: 5%;
+.infos-page{
   border: 2px solid black;
-}
-
-.form2{
-  margin: auto;
   background-color: white;
-  flex-direction: column;
-  background-color: white;
-  width: 70%;
-  padding-bottom: 2%;
-  margin-bottom: 5%;
-  border: 2px solid black;
-}
-
-form{
-  margin: auto;
-  margin-bottom: 1%;
-  background-color: white;
-  width: 80%;
-}
-
-fieldset{
-  height: 100%;
-  width: 75%;
-  margin: 0 auto;
-}
-
-legend{
   margin: 2%;
+  padding: 1%;
 }
 
-input[type=text], input[type=password], input[type=textarea]{
-  padding: 0.5em;
-  width: 50%;
+.infos-page p{
+  text-align: center;
 }
 
-select, option{
-  padding: 0.3em;
-  width: 50%;
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-input[type=submit]{
-  display: block;
-  padding: 0.5em;
-  margin-top: 0.5em;
-  widows: 20%;
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-label{
-  width: 50%;
-  display: block;
-  margin-top: 0.5em;
+input[type=submit]:hover {
+    background-color: #45a049;
 }
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+table{
+  border: 2px solid black;
+  margin: auto;
+  padding: 5%;
+}
+
+tfoot{
+  border: 2px solid yellow;
+}
+
+.supprimer-tfoot input[type=submit]{
+  display: inline-block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid blue;
+  margin: auto;
+}
+
 footer{
   display: block;
   color: #ff8000;
@@ -195,8 +234,8 @@ footer p {
   margin: 0;
   color: #ff8000;
   text-align: center;
-    text-decoration: none;
-    margin: 1%;
+  text-decoration: none;
+  margin: 1%;
   margin-left: auto;
   margin-right: auto;
 }
